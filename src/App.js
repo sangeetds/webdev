@@ -3,8 +3,11 @@ import Todos from './components/Todos';
 import './App.css';
 import Header from './components/layout/Header';
 import AddToDo from './components/AddToDo';
+import { BrowserRouter, Route } from 'react-router-dom';
+import About from './components/pages/AboutMe.js';
 
 class App extends Component {
+
     state = {
         todos: [
             {
@@ -39,16 +42,45 @@ class App extends Component {
         this.setState( { todos: [...this.state.todos.filter((todo) => todo.id !== id )] })
     }
 
+    addTodo = (title) => {
+        console.log('hello');
+        const newTodo = {
+            id: { random },
+            title,
+            completed: false
+        }
+        this.setState( { todos: [...this.state.todos, newTodo] })
+        random = random + 1;
+    }
+
     render() {
         console.log(this.state.todos)
         return (
-            <div className = "div">
-                <Header />
-                <AddToDo />
-                <Todos todos = { this.state.todos } delTodo = { this.delTodo } markComplete = { this.markComplete }/>
-            </div>
+            <BrowserRouter>
+                <div className = "div">
+                    <div className = "container">
+                        <Header />
+                        <Route exact path = "/" render = { props => (
+                            <React.Fragment>
+                                    <AddToDo addTodo = { this.addTodo }></AddToDo>
+                                    <Todos todos = { this.state.todos } delTodo = { this.delTodo } markComplete = { this.markComplete }></Todos>
+                                </React.Fragment>
+                            )
+                            }></Route>
+                        <Route path = "/about" component = { About } />
+                    </div>
+                </div>
+            </BrowserRouter>
         )
     }
 }
+// <Route path = "/" render = { props => (
+//     <React.Fragment>
+//         <AddToDo addTodo = { this.addTodo }></AddToDo>
+//         <Todos todos = { this.state.todos } delTodo = { this.delTodo } markComplete = { this.markComplete }></Todos>
+//     </React.Fragment>
+// ) }></Route>
+
+var random = 4;
 
 export default App;
