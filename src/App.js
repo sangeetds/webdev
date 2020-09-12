@@ -12,18 +12,21 @@ class App extends Component {
         todos: [
             {
                 title: "Take out the trash",
-                id: 1,
-                completed: false
+                id: 34,
+                completed: false,
+                priority: 1
             },
             {
                 title: "Dinner",
-                id: 2,
-                completed: false
+                id: 23,
+                completed: false,
+                priority: 4
             },
             {
                 title: "Dog walk",
-                id: 3,
-                completed: false
+                id: 30,
+                completed: false,
+                priority: 2
             }
         ]
     }
@@ -42,12 +45,12 @@ class App extends Component {
         this.setState( { todos: [...this.state.todos.filter((todo) => todo.id !== id )] })
     }
 
-    addTodo = (title) => {
-        console.log('hello');
+    addTodo = (title, priority) => {
         const newTodo = {
             id: { random },
             title,
-            completed: false
+            completed: false,
+            priority
         }
         this.setState( { todos: [...this.state.todos, newTodo] })
         random = random + 1;
@@ -59,12 +62,12 @@ class App extends Component {
             <BrowserRouter>
                 <div className = "div">
                     <div className = "container">
-                        <Header />
+                        <Header style = { centering }/>
                         <Route exact path = "/" render = { props => (
                             <React.Fragment>
-                                    <AddToDo addTodo = { this.addTodo }></AddToDo>
-                                    <Todos todos = { this.state.todos } delTodo = { this.delTodo } markComplete = { this.markComplete }></Todos>
-                                </React.Fragment>
+                                <AddToDo addTodo = { this.addTodo }></AddToDo>
+                                <Todos todos = { this.state.todos } delTodo = { this.delTodo } markComplete = { this.markComplete }></Todos>
+                            </React.Fragment>
                             )
                             }></Route>
                         <Route path = "/about" component = { About } />
@@ -82,5 +85,10 @@ class App extends Component {
 // ) }></Route>
 
 var random = 4;
+
+const centering = {
+    justifyContent: "center",
+    alignItem: "center"
+}
 
 export default App;

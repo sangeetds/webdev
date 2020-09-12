@@ -7,8 +7,9 @@ function Header() {
     return (
         <header style = { headerStyle }>
             <h1>TodoList</h1>
-            <Link style = { linkStyle } to = "/">Home   |   </Link>
-            <Link style = { linkStyle } to = "/abuot">About</Link>
+            <Link style = { linkStyle } to = "/"> Home </Link>
+            <span> | </span>
+            <Link style = { linkStyle } to = "/about">About</Link>
         </header>
     )
 }
@@ -16,6 +17,7 @@ function Header() {
 const linkStyle = {
     textDecoration: 'none',
     color: "#fff",
+    margin: "20px"
 }
 
 const headerStyle = {
