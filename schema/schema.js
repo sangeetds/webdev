@@ -4,9 +4,9 @@ const {
     GraphQLObjectType,
     GraphQLID,
     GraphQLInt,
-    GraphQLBoolean
+    GraphQLBoolean,
+    GraphQLList
 } = require('graphql');
-const lodash = require('lodash');
 
 const todos = [
     {
@@ -49,6 +49,12 @@ const RootQuery = new GraphQLObjectType( {
                 return todos.find((todo) => {
                     return todo.id === args.id
                 });
+            }
+        },
+        todos: {
+            type: GraphQLList(Todos),
+            resolve: () => {
+                return todos
             }
         }
     })
