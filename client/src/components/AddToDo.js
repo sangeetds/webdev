@@ -22,7 +22,7 @@ class AddToDo extends React.Component {
         return (
             <form onSubmit = { this.onSubmit } style = { { display: 'flex' } }>
                 <input style = { { flex: '10', padding: '5px' } } type = "text" name = "title" placeholder = "Add Todo..." value = { this.state.title } onChange = { this.onChange } />
-                <input style = { { flex: '4', padding: '5px' } } type = "number" name = "priority" placeholder = "Set Item's Priority" onfocus="this.type='number';" onChange = { this.priorityChange } />
+                <input style = { { flex: '4', padding: '5px' } } type = "number" name = "priority" placeholder = "Set Item's Priority" onChange = { this.priorityChange } />
                 <input style = { { flex: '1' } } className = "btn" type = "submit" value = "Add"/>
             </form>
         )

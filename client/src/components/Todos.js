@@ -6,9 +6,13 @@ import '../App.css';
 class Todos extends Component {
 
     render() {
-        return this.props.todos.sort((a,b) => (a.priority > b.priority) ? 1 : ((b.priority > a.priority) ? -1 : 0)).map((todo) => (
-            <TodoItem key = {todo.id} delTodo = { this.props.delTodo } todo = {todo} markComplete = { this.props.markComplete } className = "back"/>
-        ))
+        console.log(this.props);
+        return (
+            <div />
+        )
+        // this.props.todos.sort((a,b) => (a.priority > b.priority) ? 1 : ((b.priority > a.priority) ? -1 : 0)).map((todo) => (
+        //     <TodoItem key = {todo.id} delTodo = { this.props.delTodo } todo = {todo} markComplete = { this.props.markComplete } className = "back"/>
+        // ))
     }
 }
 

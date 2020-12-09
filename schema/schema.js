@@ -1,3 +1,4 @@
+const todo = require('../model/todos');
 const {
     GraphQLString,
     GraphQLSchema,
@@ -5,35 +6,15 @@ const {
     GraphQLID,
     GraphQLInt,
     GraphQLBoolean,
-    GraphQLList
+    GraphQLList,
+    GraphQLNonNull
 } = require('graphql');
-
-const todos = [
-    {
-        title: "Take out the trash",
-        id: 34,
-        completed: false,
-        priority: 1
-    },
-    {
-        title: "Dinner",
-        id: 23,
-        completed: false,
-        priority: 4
-    },
-    {
-        title: "Dog walk",
-        id: 30,
-        completed: false,
-        priority: 2
-    }
-]
 
 const Todos = new GraphQLObjectType( {
     name: 'Todo',
     fields: () => ({
         title: { type: GraphQLString },
-        id: { type: GraphQLInt },
+        _id: { type: GraphQLString },
         completed: { type: GraphQLBoolean },
         priority: { type: GraphQLString },
     })
@@ -46,20 +27,55 @@ const RootQuery = new GraphQLObjectType( {
             type: Todos,
             args: { id: { type: GraphQLInt } },
             resolve: (parent, args) => {
-                return todos.find((todo) => {
-                    return todo.id === args.id
-                });
+                console.log(todo.findById(args._id));
+                return todo.findById(args._id)
             }
         },
         todos: {
             type: GraphQLList(Todos),
             resolve: () => {
-                return todos
+                console.log(todo.find({}));
+                return todo.find({})
             }
         }
     })
 })
 
+const Mutation = new GraphQLObjectType( {
+    name: 'Mutation',
+    fields: {
+        addTodo: {
+            type: Todos,
+            args: {
+                 title: { type: new GraphQLNonNull(GraphQLString) },
+                 completed: { type: new GraphQLNonNull(GraphQLBoolean) },
+                 priority: { type: new GraphQLNonNull(GraphQLID) }
+            },
+            resolve: (parent, args) => {
+                const newTodo = new todo( {
+                    title: args.title,
+                    completed: args.completed,
+                    priority: args.priority
+                })
+                console.log(newTodo);
+                return newTodo.save();
+            }
+        },
+        removeTodo: {
+            type: Todos,
+            args: {
+                 id: { type: GraphQLString }
+            },
+            resolve: (parent, args) => {
+                const todoRemove = todo.findById(args.id)
+                console.log(todoRemove);
+                return todoRemove.deleteOne();
+            }
+        }
+    }
+})
+
 module.exports = new GraphQLSchema({
-    query: RootQuery
+    query: RootQuery,
+    mutation: Mutation
 });
