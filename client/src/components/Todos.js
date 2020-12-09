@@ -1,24 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TodoItem from "./TodoItem"
 import PropTypes from 'prop-types';
 import '../App.css';
+import { gql, useQuery } from '@apollo/client';
 
-class Todos extends Component {
-
-    render() {
-        console.log(this.props);
-        return (
-            <div />
-        )
-        // this.props.todos.sort((a,b) => (a.priority > b.priority) ? 1 : ((b.priority > a.priority) ? -1 : 0)).map((todo) => (
-        //     <TodoItem key = {todo.id} delTodo = { this.props.delTodo } todo = {todo} markComplete = { this.props.markComplete } className = "back"/>
-        // ))
+const getTodosQuery = gql`
+    {
+        todos {
+            _id
+            title
+            completed
+            priority
+        }
     }
+`;
+
+export default function Todos() {
+    const { loading, error, data } = useQuery(getTodosQuery);
+
+    console.log(data);
+    if (loading) {
+        return(
+            
+        )
+    }
+    return (
+        data.todos.sort((a,b) => (a.priority > b.priority) ? 1 : ((b.priority > a.priority) ? -1 : 0)).map((todo) => (<TodoItem key = {todo.id} delTodo = { this.props.delTodo } todo = {todo} markComplete = { this.props.markComplete } className = "back"/>)
+        )
+    )
 }
 
 // PropTypes
 Todos.propTypes = {
     todos: PropTypes.array.isRequired
 }
-
-export default Todos;

@@ -5,7 +5,7 @@ import Header from './components/layout/Header';
 import AddToDo from './components/AddToDo';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { ApolloClient, InMemoryCache, ApolloProvider, gql, useQuery } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 
 const client = new ApolloClient({
     uri: 'http://localhost:5000/graphql',
@@ -16,38 +16,7 @@ const addTodo = 1;
 const delTodo = 2;
 const markComplete = 3;
 
-const GetQuery = () => {
-    const getTodosQuery = gql`
-        {
-            todos {
-                _id
-                title
-                completed
-                priority
-            }
-        }
-    `;
-
-    const { loading, error, data } = useQuery(getTodosQuery);
-
-    if (loading) {
-        console.log("Loading");
-        return [];
-    }
-
-    console.log(data);
-    return data
-}
-
-
 export function App() {
-
-    const [todos, setTodos] = useState([]);
-
-    useEffect(() => {
-        setTodos(GetQuery())
-    }, [])
-
 
     return (
         <ApolloProvider client = { client }>
@@ -58,7 +27,7 @@ export function App() {
                         <Route exact path = "/" render = { props => (
                             <>
                                 <AddToDo addTodo = { addTodo } />
-                                <Todos todos = { todos } delTodo = { delTodo } markComplete = { markComplete } />
+                                <Todos delTodo = { delTodo } markComplete = { markComplete } />
                             </>
                             )
                             }></Route>
