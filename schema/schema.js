@@ -25,7 +25,7 @@ const RootQuery = new GraphQLObjectType( {
     fields: ({
         todo: {
             type: Todos,
-            args: { id: { type: GraphQLInt } },
+            args: { id: { type: GraphQLString } },
             resolve: (parent, args) => {
                 console.log(todo.findById(args._id));
                 return todo.findById(args._id)
@@ -34,7 +34,6 @@ const RootQuery = new GraphQLObjectType( {
         todos: {
             type: GraphQLList(Todos),
             resolve: () => {
-                console.log(todo.find({}));
                 return todo.find({})
             }
         }
@@ -48,8 +47,7 @@ const Mutation = new GraphQLObjectType( {
             type: Todos,
             args: {
                  title: { type: new GraphQLNonNull(GraphQLString) },
-                 completed: { type: new GraphQLNonNull(GraphQLBoolean) },
-                 priority: { type: new GraphQLNonNull(GraphQLID) }
+                 priority: { type: new GraphQLNonNull(GraphQLString) }
             },
             resolve: (parent, args) => {
                 const newTodo = new todo( {
@@ -69,7 +67,8 @@ const Mutation = new GraphQLObjectType( {
             resolve: (parent, args) => {
                 const todoRemove = todo.findById(args.id)
                 console.log(todoRemove);
-                return todoRemove.deleteOne();
+                todoRemove.deleteOne();
+                return todoRemove;
             }
         }
     }

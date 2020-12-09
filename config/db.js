@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const connect = "mongodb+srv://sangeet:sangeet@todos.2huon.mongodb.net/Todos?retryWrites=true&w=majority"
 
 const db = async () => {
     try {

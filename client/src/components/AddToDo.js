@@ -1,32 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../App.css';
 
-class AddToDo extends React.Component {
+export default function AddToDo(props) {
+    const [ title, setTitle ] = useState("");
+    const [ priority, setPriority ] = useState("");
 
-    state = {
-        title: '',
-        priority: 0
-    }
-
-    onSubmit = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
-        this.props.addTodo(this.state.title, this.state.priority);
-        this.setState( { title: '', priority: 0 });
+        setTitle("");
+        setPriority("");
+        props.addTodo(title, priority);
     }
 
-    onChange = (e) => this.setState( { title: e.target.value });
+    const onChange = (e) => setTitle(e.target.value);
 
-    priorityChange = (e) => this.setState( { priority: e.target.value })
+    const priorityChange = (e) => setPriority(e.target.value)
 
-    render () {
-        return (
-            <form onSubmit = { this.onSubmit } style = { { display: 'flex' } }>
-                <input style = { { flex: '10', padding: '5px' } } type = "text" name = "title" placeholder = "Add Todo..." value = { this.state.title } onChange = { this.onChange } />
-                <input style = { { flex: '4', padding: '5px' } } type = "number" name = "priority" placeholder = "Set Item's Priority" onChange = { this.priorityChange } />
-                <input style = { { flex: '1' } } className = "btn" type = "submit" value = "Add"/>
-            </form>
-        )
-    }
+    return (
+        <form onSubmit = { onSubmit } style = { { display: 'flex' } }>
+            <input style = { { flex: '10', padding: '5px' } } type = "text" name = "title" placeholder = "Add Todo..." value = { title } onChange = { onChange } />
+            <input style = { { flex: '4', padding: '5px' } } type = "number" name = "priority" placeholder = "Set Item's Priority" value = { priority } onChange = { priorityChange } />
+            <input style = { { flex: '1' } } className = "btn" type = "submit" value = "Add"/>
+        </form>
+    )
 }
-
-export default AddToDo;

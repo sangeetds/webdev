@@ -7,12 +7,12 @@ const TodosSchema = new mongoose.Schema( {
         required: [true, 'Please give a title to the task']
     },
     priority: {
-        type: Number,
+        type: String,
         required: [true, 'Please add the title']
     },
     completed: {
         type: Boolean,
-        required: [true, 'Please add the title']
+        default: false
     }
 })
 
