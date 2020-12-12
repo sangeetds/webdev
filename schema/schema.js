@@ -47,7 +47,8 @@ const Mutation = new GraphQLObjectType( {
             type: Todos,
             args: {
                  title: { type: new GraphQLNonNull(GraphQLString) },
-                 priority: { type: new GraphQLNonNull(GraphQLString) }
+                 priority: { type: new GraphQLNonNull(GraphQLString) },
+                 completed: { type: new GraphQLNonNull(GraphQLBoolean) }
             },
             resolve: (parent, args) => {
                 const newTodo = new todo( {

@@ -5,38 +5,36 @@ import Header from './components/layout/Header';
 import AddToDo from './components/AddToDo';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { useLazyQuery, useMutation, useCallback } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { GET_TODOS, ADD_TODOS, REMOVE_TODOS } from './components/queries/Queries.js'
-
-const markComplete = 3;
 
 export function App() {
     const [ todos, setTodos ] = useState([])
     const [ getTodo, { loading, data } ] = useLazyQuery(GET_TODOS);
-    const [ addTodo, { title } ] = useMutation(ADD_TODOS);
+    const [ addTodo, { title } ] = useMutation(ADD_TODOS, {
+      refetchQueries: [
+        { query: GET_TODOS }
+      ]
+    });
     const [ removeTodo, { data2 } ] = useMutation(REMOVE_TODOS);
-
-    const call = useCallback(() => plusTodo, [])
 
     const plusTodo =
         (title, priority) => {
-            console.log(title + " " + priority);
-            addTodo({ variables: { title: title, priority: priority } })
+            addTodo({ variables: { title: title, priority: priority, completed: false } })
             getTodo()
-
-            if (data) {
-                setTodos(data.todos)
-            }
         };
+
+    const markComplete = (todo) => {
+        const newTodo = { title: todo.title, priority: todo.priority, completed: true }
+        // removeTodo({ variables: { id: todo.id } });
+        // addTodo({ variables: { newTodo } });
+        //
+    }
 
     useEffect(() => {
         getTodo()
 
-        console.log(data);
-        if (data) {
-            setTodos(data.todos)
-        }
-    }, [data, todos, getTodo, plusTodo])
+    })
 
     return (
         <BrowserRouter>
@@ -46,7 +44,7 @@ export function App() {
                     <Route exact path = "/" render = { props => (
                         <>
                             <AddToDo addTodo = { plusTodo }/>
-                            <Todos todo = { todos }  delTodo = { removeTodo } markComplete = { markComplete } />
+                            <Todos todo = { data } loading = { loading } delTodo = { removeTodo } markComplete = { markComplete } />
                         </>
                         )
                         }></Route>

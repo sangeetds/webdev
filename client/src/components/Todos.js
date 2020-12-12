@@ -10,6 +10,12 @@ class Todos extends React.Component {
             )
         }
 
+        if (this.props.loading) {
+            return(
+                <> Loading </>
+            )
+        }
+
         return (
             this.props.todo
                 .slice()

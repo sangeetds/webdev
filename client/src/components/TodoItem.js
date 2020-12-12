@@ -10,7 +10,7 @@ export default function TodoItem(props) {
     return (
         <div style = { getStyle(props.todo) }>
             <p>
-                <input type = "checkbox" onChange = { props.markComplete } /> { '   ' }
+                <input type = "checkbox" onChange = { props.markComplete(props.todo) } /> { '   ' }
                 { title }
                 <button onClick = { onDelete } style = { btnStyle }>x</button>
             </p>
