@@ -4,9 +4,12 @@ import App from './App';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 const client = new ApolloClient({
-    uri: '/graphql',
+    uri: 'https://fast-dusk-42878.herokuapp.com/graphql',
+    fetchOptions: {
+        mode: 'no-cors',
+    },
     cache: new InMemoryCache()
-});
+})
 
 ReactDOM.render(
     <ApolloProvider client = { client }>

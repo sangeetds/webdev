@@ -12,8 +12,8 @@ export const GET_TODOS = gql`
 `;
 
 export const ADD_TODOS = gql`
-    mutation AddTodo($title: String!, $priority: String!){
-        addTodo(title: $title, priority: $priority){
+    mutation AddTodo($title: String!, $priority: String!, $completed: Boolean!){
+        addTodo(title: $title, priority: $priority, completed: $completed){
             title
         }
     }
