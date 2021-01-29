@@ -2,29 +2,38 @@ import React from 'react'
 import '../App.css';
 
 export default function TodoItem(props) {
-    const { _id, title } = props.todo
-    const onDelete = () => {
-        props.delTodo({ variables: { id: _id } })
+
+    const handleChange = (event) => {
+        const value = event.target.checked
+        event.preventDefault();
+        if (value) {
+            props.markComplete(props.todo)
+        }
+    }
+
+    const handleButtonChange = (event) => {
+        props.deleteTodo(props.todo._id)
+        event.preventDefault();
     }
 
     return (
         <div style = { getStyle(props.todo) }>
             <p>
-                <input type = "checkbox" onChange = { props.markComplete(props.todo) } /> { '   ' }
-                { title }
-                <button onClick = { onDelete } style = { btnStyle }>x</button>
+                <input onChange = { handleChange } type = "checkbox" /> { '   ' }
+                { props.todo.title }
+                <button onClick = { handleButtonChange } style = { btnStyle }>x</button>
             </p>
         </div>
     )
 }
 
 const getStyle = (todo) => {
-    var decorate = todo.completed ? "line-through" : "none"
+    var decorate = todo.completed ? 'line-through' : 'none';
     return ( {
         background: "#f4f4f4",
         padding: '10px',
         borderBottom: '1px #ccc dotted',
-        textDecoration: { decorate }
+        textDecoration: decorate
         }
     )
 }
