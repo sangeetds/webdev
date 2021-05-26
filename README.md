@@ -8,4 +8,4 @@ You can have a look at the web app <a href="https://60148ecad7c90c00a98fc18d--co
 
 # Screenshots of the project.
 
-<img src="https://github.com/sangeetds/ToDos/blob/master/pictures/Todo_Loading.png" />
+<img src="https://github.com/sangeetds/ToDos/blob/master/pictures/Todos.26.05.png" width="500"/>
