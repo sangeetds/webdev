@@ -4,6 +4,8 @@ const schema = require('./schema/schema');
 const cors = require( `cors` );
 const { graphqlHTTP } = require('express-graphql');
 const expressPlayground = require("graphql-playground-middleware-express").default;
+const dotenv = require('dotenv');
+dotenv.config();
 
 const app = express();
 
@@ -25,5 +27,5 @@ app.use('/graphql', graphqlHTTP({
 app.get("/playground", expressPlayground({ endpoint: "/graphql" }));
 
 app.listen(process.env.PORT, '0.0.0.0', () => {
-    console.log("listening...")
+    console.log(`listening at port ${process.env.PORT}`)
 });
